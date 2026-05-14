@@ -1,11 +1,9 @@
     let arr=[3,5,9,2,7];
-    let count=0
 for(let i =0;i<arr.length;i++){
     for(let j=0;j<arr.length;j++){
         if(arr[j]<arr[j+1]){
             [arr[j],arr[j+1]]=[arr[j+1],arr[j]]
-            count++;
         }
     }
 }
-console.log(count)
+console.log(arr)
