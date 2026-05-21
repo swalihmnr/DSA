@@ -14,44 +14,61 @@ class BST{
             this.root=new Node(value)
             return 
         }
-        let newNode=new Node(value)
-        let current=this.root;
+        let newNode=new Node(value);
+        let current=this.root
         while(true){
             if(value<current.value){
                 if(current.left===null){
                     current.left=newNode;
-                    return
+                    return 
                 }
-                current=current.left
+                current=current.left;
             }else{
                 if(current.right===null){
                     current.right=newNode;
                     return 
                 }
-                 current=current.right
+                current=current.right
             }
+
         }
     }
-    preOrder(node){
+    preorder(node){
         if(node===null){
-            return
+            return 
         }
+        console.log(node.value)
+        this.preorder(node.left);
+        this.preorder(node.right)
+    }
+    inOrder(node){
+        if(node===null){
+            return 
+        }
+        this.inOrder(node.left);
         console.log(node.value);
-        this.preOrder(node.left);
-        this.preOrder(node.right)
+        this.inOrder(node.right)
+    }
+    postOrder(node){
+        if(node===null){
+            return 
+        }
+        this.postOrder(node.left);
+        this.postOrder(node.right);
+        console.log(node.value)
     }
     levelOrder(){
         let queue=[];
         queue.push(this.root);
         while(queue.length>0){
-            let current=queue.shift(); 
+            let current=queue.shift();
             if(current.left){
                 queue.push(current.left)
             }
-            console.log(current.value)
-            if(current.right){
-                queue.push(current.right)
-            }
+        console.log(current.value);
+        if(current.right){
+            queue.push(current.right)
+        }
         }
     }
     search(value){
@@ -61,24 +78,23 @@ class BST{
                 return true
             }
             if(value<current.value){
-                current=current.left;
+                current=current.left
             }else{
                 current=current.right
             }
         }
-        return false
     }
     min(){
         let current=this.root;
-        while(current.left){
+        while(current){
             current=current.left;
         }
         return current.value
     }
     max(){
         let current=this.root;
-        while(current.right){
-            current=current.right
+        while(current){
+            current=current.right;
         }
         return current.value
     }
@@ -127,17 +143,10 @@ countLeaf(node){
 }
 
 }
-let bst=new BST();
-bst.insert(50);
-bst.insert(20);
-bst.insert(10)
-bst.insert(30);
-bst.insert(60);
-bst.insert(65)
-bst.insert(70)
-bst.levelOrder()
-console.log(bst.hight(bst.root))
-console.log(bst.edgeFinding(bst.root))
-console.log(bst.findDepth(bst.root,20))
-console.log(bst.countNode(bst.root))
-console.log(bst.countLeaf(bst.root))
+const tree =new BST();
+tree.insert(10);
+tree.insert(20);
+tree.insert(30);
+tree.insert(40);
+tree.insert(50);
+tree.levelOrder()
