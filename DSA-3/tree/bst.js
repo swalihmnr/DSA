@@ -141,6 +141,23 @@ countLeaf(node){
     }
     return this.countLeaf(node.left)+this.countLeaf(node.right)
 }
+// bst leaf deletion
+delete(node,value){
+    if(node===null){
+        return -1
+    }
+    if(value<node.value){
+        node.left=this.delete(node.left,value);
+    }else if(value>node.value){
+        node.right=this.delete(node.right,value);
+    }else{
+        if(node.left===null&&node.right===null){
+            return  null
+        }
+    }
+    return node
+}
+
 
 }
 const tree =new BST();
