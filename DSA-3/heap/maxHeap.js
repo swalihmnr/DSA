@@ -17,6 +17,36 @@ class Maxheap{
             index=parantIndex;
         }
     }
+}
+const heap=new Maxheap();
+heap.insert(73)
+heap.insert(30)
+heap.insert(70)
+heap.insert(60)
+heap.insert(50)
+heap.insert(100)
+console.log(heap.heap)
+
+// remove
+class Maxheap{
+    constructor(){
+        this.heap=[];
+    }
+    insert(value){
+        this.heap.push(value);
+        this.heapFyUp()
+    }
+    heapFyUp(){
+        let index=this.heap.length-1;
+        while(index>0){
+            let parantIndex=Math.floor((index-1)/2);
+            if(this.heap[parantIndex]>=this.heap[index]){
+                break;
+            }
+            [this.heap[parantIndex],this.heap[index]]=[this.heap[index],this.heap[parantIndex]];
+            index=parantIndex;
+        }
+    }
     remove(){
         if(this.heap.length===0){
             return null
@@ -32,8 +62,8 @@ class Maxheap{
     heapFyDown(){
         let index=0;
         let length=this.heap.length;
+        let largest=index;
         while(true){
-            let largest=index;
             let leftChild=2*index+1;
             let rightChild=2*index+2;
             if(leftChild<length&&this.heap[leftChild]>this.heap[largest]){
@@ -51,11 +81,4 @@ class Maxheap{
         
     }
 }
-const heap=new Maxheap();
-heap.insert(73)
-heap.insert(30)
-heap.insert(70)
-heap.insert(60)
-heap.insert(50)
-heap.insert(100)
-console.log(heap.heap)
+
