@@ -1,61 +1,53 @@
-class Maxheap{
+class MinHeap{
     constructor(){
         this.heap=[];
     }
     insert(value){
         this.heap.push(value);
-        this.heapFyUp()
+
     }
-    heapFyUp(){
+    heapifyUp(){
         let index=this.heap.length-1;
         while(index>0){
-            let parantIndex=Math.floor((index-1)/2);
-            if(this.heap[parantIndex]>=this.heap[index]){
+            let parentIndex=Math.floor((index-1)/2);
+            if(this.heap[parentIndex]<this.heap[index]){
                 break;
             }
-            [this.heap[parantIndex],this.heap[index]]=[this.heap[index],this.heap[parantIndex]];
-            index=parantIndex;
+            [this.heap[parentIndex],this.heap[index]]=[this.heap[index],this.heap[parentIndex]];
+            index=parentIndex
         }
     }
     remove(){
-        if(this.heap.length===0){
+        if(this.heap===0){
             return null
         }
-        if(this.heap.length===1){
-            return this.heap.pop()
+        if(this.heap===1){
+            return this.heap.pop();
         }
-        let max=this.heap[0];
+        let min=this.heap[0];
         this.heap[0]=this.heap.pop();
-        this.heapFyDown();
-        return max
+        
     }
-    heapFyDown(){
+    heapifyDown(){
         let index=0;
         let length=this.heap.length;
         while(true){
-            let largest=index;
-            let leftChild=2*index+1;
-            let rightChild=2*index+2;
-            if(leftChild<length&&this.heap[leftChild]>this.heap[largest]){
-                largest=leftChild;
+            let min=index;
+            let left=2*index+1;
+            let right=2*index+2;
+            if(left<length&&this.heap[left]<this.heap[min]){
+                min=left
             }
-            if(rightChild<length&&this.heap[rightChild]>this.heap[largest]){
-                largest=rightChild
+            if(right<length&&this.heap[right]<this.heap[min]){
+                min=right
             }
-            if(index===largest){
-                break;
+            if(index===min){
+                break
             }
-            [this.heap[index],this.heap[largest]]=[this.heap[largest],this.heap[index]];
-            index=largest
+            [this.heap[index],this.heap[min]]=[this.heap[min],this.heap[index]];
+            index=min
         }
         
     }
+
 }
-const heap=new Maxheap();
-heap.insert(73)
-heap.insert(30)
-heap.insert(70)
-heap.insert(60)
-heap.insert(50)
-heap.insert(100)
-console.log(heap.heap)
