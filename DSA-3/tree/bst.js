@@ -141,22 +141,29 @@ countLeaf(node){
     }
     return this.countLeaf(node.left)+this.countLeaf(node.right)
 }
-// bst leaf deletion
-delete(node,value){
+ deletion(node,value){
     if(node===null){
-        return -1
+        return null
     }
     if(value<node.value){
-        node.left=this.delete(node.left,value);
-    }else if(value>node.value){
-        node.right=this.delete(node.right,value);
+        return node.left=this.deletion(node.left,value)
+    }else if (value>node.value){
+        return node.right=this.deletion(node.right,value);
     }else{
         if(node.left===null&&node.right===null){
-            return  null
+            return null
         }
+        if(node.left===null){
+            return node.right
+        }
+        if(node.right===null){
+            return node.left
+        }
+        let minValue=this.min(this.right);
+        node.vlaue=minValue;
+        node.right=this.deletion(node.right,vlaue)
     }
-    return node
-}
+   }
 
 
 }
