@@ -43,7 +43,7 @@ class PriorityQueue{
             let largest=index
             let left=2*index+1;
             let right=2*index+2;
-            if(left<length&&this.heap[left].priority>this.heap[largest]){
+            if(left<length&&this.heap[left].priority>this.heap[largest].priority){
                 largest=left
             }
             if(right<length&&this.heap[right].priority>this.heap[largest].priority){

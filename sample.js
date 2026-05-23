@@ -1,70 +1,73 @@
-class Node{
-    constructor(value,priority){
-        this.value=value;
-        this.priority=priority;
-    }
-}
-class PriorityQueue{
+class Maxheap{
     constructor(){
-        this.heap=[]
+        this.heap=[];
     }
-    enqueue(value,priority){
-        let newNode=new Node(value,priority);
-        this.heap.push(newNode);
+    insert(value){
+        this.heap.push(value);
         this.heapifyUp()
+
     }
-    dequeue(){
+    heapifyUp(){
+        let index=this.heap.length-1;
+        while(index>0){
+            let parentIndex=Math.floor((index-1)/2);
+            if(this.heap[index]<=this.heap[parentIndex]){
+                break;
+            }
+            [this.heap[index],this.heap[parentIndex]]=[this.heap[parentIndex],this.heap[index]];
+            index=parentIndex
+        }
+    }
+    remove(){
         if(this.heap.length===0){
             return null
         }
         if(this.heap.length===1){
-            return this.heap.pop();
+            return this.heap.pop()
         }
         let max=this.heap[0];
         this.heap[0]=this.heap.pop();
         this.heapifyDown()
         return max
-    }
-    heapifyUp(){
-        let index=this.heap.length-1;
-        while(index>0){
-            let parantIndex=Math.floor((index-1)/2)
-            if(this.heap[parantIndex].priority>=this.heap[index].priority){
-                break;
-            }
-            [this.heap[parantIndex],this.heap[index]]=[this.heap[index],this.heap[parantIndex]];
-            index=parantIndex
-        }
+
     }
     heapifyDown(){
         let index=0;
-        let length=this.heap.length;
+        let length=this.heap.length
         while(true){
             let largest=index
             let left=2*index+1;
             let right=2*index+2;
-            if(left<length&&this.heap[left].priority>this.heap[largest]){
-                largest=left
+            if(left<length&&this.heap[left]>=this.heap[largest]){
+                largest=left;
             }
-            if(right<length&&this.heap[right].priority>this.heap[largest].priority){
+            if(right<length&&this.heap[right]>=this.heap[largest]){
                 largest=right
             }
-            if(index===largest){
+            if(largest===index){
                 break
             }
             [this.heap[index],this.heap[largest]]=[this.heap[largest],this.heap[index]];
             index=largest;
         }
     }
+    heapSort(arr){
+       for(let i of arr){
+        this.insert(i);
+       }
+       let sort=[];
+       while(this.heap.length>0){
+        sort.push(this.remove())
+       }
+       return sort
+    }
 }
-const pq = new PriorityQueue();
 
-pq.enqueue("Fever",1);
-
-pq.enqueue("Broken Arm",3);
-
-pq.enqueue("Heart Attack",10);
-
-console.log(pq.heap);
-
-console.log(pq.dequeue());
+const p=new Maxheap();
+// p.insert(20)
+// p.insert(50)
+// p.insert(40)
+// p.insert(30)
+p.remove()
+console.log(p.heapSort([30,45,64,23,56]))
+console.log(p.heap)

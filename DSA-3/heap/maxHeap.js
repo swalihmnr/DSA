@@ -80,5 +80,16 @@ class Maxheap{
         }
         
     }
+        heapSort(arr){
+       for(let i of arr){
+        this.insert(i);
+       }
+       let sort=[];
+       while(this.heap.length>0){
+        sort.push(this.remove())
+       }
+       return sort
+    }
+
 }
 
