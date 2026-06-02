@@ -104,7 +104,6 @@ class BST{
         }
         return 1+Math.max(this.hight(node.left),this.hight(node.right))
     }
-
     edgeFinding(node){
         if(node===null){
             return -1;
@@ -141,14 +140,14 @@ countLeaf(node){
     }
     return this.countLeaf(node.left)+this.countLeaf(node.right)
 }
- deletion(node,value){
+   delete(node,value){
     if(node===null){
         return null
     }
     if(value<node.value){
-        return node.left=this.deletion(node.left,value)
-    }else if (value>node.value){
-        return node.right=this.deletion(node.right,value);
+       node.left= this.delete(node.left,value)
+    }else if(value>node.value){
+        node.right=this.delete(node.right,value);
     }else{
         if(node.left===null&&node.right===null){
             return null
@@ -159,10 +158,12 @@ countLeaf(node){
         if(node.right===null){
             return node.left
         }
-        let minValue=this.min(this.right);
-        node.vlaue=minValue;
-        node.right=this.deletion(node.right,vlaue)
+        let minValue=this.min(node.right);
+        node.value=minValue;
+        node.right=this.delete(node.right,minValue)
+
     }
+    return node
    }
 
 
