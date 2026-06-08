@@ -49,13 +49,14 @@ class Trie{
         }
         let result=[];
         this.collectWord(node,prefix,result)
+        return result
     }
     collectWord(node,word,result){
         if(node.endOfword){
             result.push(word)
         }
         for(let char in node.children){
-            this.collectWord(node)
+            this.collectWord(node.children[char],word+char,result)
         }
     }
     delete(word){
@@ -76,11 +77,12 @@ class Trie{
         let shouldDelete=this.deleteHelper(node.children[char],word,index+1);
         if(shouldDelete){
             delete node.children[char];
-           return Object.keys(node.children).length===0&&!node.endOfWord
+           return Object.keys(node.children).length===0&&!node.endOfWord;
         }
         return false
        
     }
+    
 
 }
 
