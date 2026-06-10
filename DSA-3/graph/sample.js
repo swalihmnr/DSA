@@ -1,5 +1,4 @@
-
- class graph{
+class Graph{
     constructor(){
         this.adjecencyList={};
     }
@@ -13,99 +12,136 @@
         this.adjecencyList[vertex2].push(vertex1);
     }
     dfs(start){
-        let visited={};
-        this.dfshelper(start,visited);
+        let visited={}
+        this.dfsHelper(start,visited)
     }
-    dfshelper(vertex,visited){
+    dfsHelper(vertex,visited){
         visited[vertex]=true;
-        console.log(vertex);
+        conso.log(vertex)
         for(let neigbor of this.adjecencyList[vertex]){
             if(!visited[neigbor]){
-                this.dfshelper(neigbor,visited)
+                this.dfsHelper(neigbor,visited);
             }
         }
     }
     bfs(start){
-        let queue=[];
         let visited={};
         visited[start]=true;
+        let queue=[];
         queue.push(start);
         while(queue.length>0){
             let vertex=queue.shift();
-            console.log(vertex)
+            console.log(vertex);
             for(let neigbor of this.adjecencyList[vertex]){
                 if(!visited[neigbor]){
                     visited[neigbor]=true;
-                    queue.push(neigbor);
+                    queue.push(neigbor)
                 }
             }
         }
     }
     hasPath(start,target){
         let visited={};
-        return this.hasPathHelper(start,target,visited);
+        return this.hasHelper(start,target,visited)
     }
-    hasPathHelper(vertex,target,visited){
+    hasHelper(vertex,target,visited){
         if(vertex===target){
-            return true
+            return true;
         }
         visited[vertex]=true;
         for(let neigbor of this.adjecencyList[vertex]){
             if(!visited[neigbor]){
-                if(this.hasPathHelper(neigbor,target,visited)){
-                    return true
-                }
-            }
-        }
-        return false
-    }
-    hasCycle(){
-        let visited={};
-        for(let vertex in this.adjecencyList){
-            if(!visited[vertex]){
-                if(this.hasCycleHelper(vertex,visited,null)){
+                if(this.hasHelper(neigbor,target,visited)){
                     return true;
                 }
             }
         }
         return false
     }
-    hasCycleHelper(vertex,visited,parent){
+    hasCycle(start){
+        let visited={};
+        if(this.helperCycle(start,visited,null)){
+            return true;
+        }
+        return false
+    }
+    helperCycle(vertex,visited,parent){
         visited[vertex]=true;
         for(let neigbor of this.adjecencyList[vertex]){
             if(!visited[neigbor]){
-                if(this.hasCycleHelper(neigbor,visited,vertex)){
-                    return true
+                if(this.helperCycle(neigbor,visited,vertex)){
+                    return true;
                 }
             }else if(neigbor!==parent){
                 return true;
             }
         }
-       
         return false
+       
     }
-    removeEdge(vertex1,vertex2){
-        this.adjecencyList[vertex1]=this.adjecencyList[vertex1].filter(neigbor=>neigbor!==vertex2);
-        this.adjecencyList[vertex2]=this.adjecencyList[vertex2].filter(neigbor=>neigbor!==vertex1)
-    }
-    removeVertex(vertex){
-        while(this.adjecencyList[vertex].length){
-            let neigbor=this.adjecencyList[vertex].pop();
-            this.removeEdge(vertex,neigbor);
+removeEdge(vertex1,vertex2){
+    this.adjecencyList[vertex1]=this.adjecencyList[vertex1].filter(neigbor=>neigbor!==vertex2);
+    this.adjecencyList[vertex2]=this.adjecencyList[vertex2].filter(neigbor=>neigbor!==vertex1);
+}
+removeEdgee(vertex1,vertex2){
+    this.adjecencyList[vertex1]=this.adjecencyList[vertex1].filter(neigbor=>neigbor!==vertex2)
+}
+    findPath(start,target){
+        let visited={};
+        let queue=[start];
+        let parent={};
+        while(queue.length>0){
+            vertex=queue.shift();
+            if(vertex===target){
+                break;
+            }
+            for(let neigbor of this.adjecencyList[vertex]){
+                if(!visited[neigbor]){
+                    visited[neigbor]=true;
+                    parent[neigbor]=vertex;
+                    queue.push(neigbor);
+                }
+            }
         }
-        delete this.adjecencyList[vertex]
+        let path=[];
+        let current=target;
+        while(current!==undefined){
+            path.unshift(current);
+            current=parent[current];
+        }
+        return path
     }
-
-
+//   Find shortest distance between two vertices
+findShortestDistance(start,target){
+    let visited={};
+    let queue=[[start,0]];
+    visited[start]=true;
+    while(queue.length>0){
+        let [vertex,distance]=queue.shift();
+        if(vertex===target){
+            return distance
+        }
+        for(let neigbor of this.adjecencyList[vertex]){
+            if(!visited[neigbor]){
+                visited[neigbor]=true;
+                queue.push([neigbor,distance+1]);
+            }
+        }
+    }
+    return -1
 }
 
-const h=new graph();
-h.addVertex('a')
-h.addVertex('b')
-h.addVertex('c')
-h.addVertex('d')
-h.addEdge('a','d');
-h.addEdge('a','b');
-h.addEdge('b','c');
-h.addEdge('c','d')
-console.log(h.hasPath('b','r'))
+}
+const g=new Graph();
+g.addVertex('a')
+g.addVertex('b')
+g.addVertex('c')
+g.addVertex('d')
+g.addVertex('f')
+g.addEdge('a','b');
+g.addEdge('a','c');
+g.addEdge('b','a');
+g.removeEdgee('a','b')
+console.log(g.findShortestDistance('a','c'))
+// g.dfs('a')
+g.bfs('a')
