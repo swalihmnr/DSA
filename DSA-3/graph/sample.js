@@ -24,22 +24,22 @@ class Graph{
             }
         }
     }
-    bfs(start){
-        let visited={};
-        visited[start]=true;
-        let queue=[];
-        queue.push(start);
-        while(queue.length>0){
-            let vertex=queue.shift();
-            console.log(vertex);
-            for(let neigbor of this.adjecencyList[vertex]){
-                if(!visited[neigbor]){
-                    visited[neigbor]=true;
-                    queue.push(neigbor)
-                }
+   bfs(start){
+    let visited={};
+    let queue=[];
+    visited[start]=true;
+    queue.push(start);
+    while(queue.length>0){
+        let vertex=queue.shift();
+        console.log(vertex)
+        for(let neigbor of this.adjecencyList[vertex]){
+            if(!visited[neigbor]){
+                visited[neigbor]=true;
+                queue.push(vertex);
             }
         }
     }
+   }
     hasPath(start,target){
         let visited={};
         return this.hasHelper(start,target,visited)
